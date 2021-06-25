@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 public class Joystick extends View {
 
     interface JoystickListener {
-        void onChange(float x, float y);
+        void onChange(float x, float y) throws InterruptedException;
     }
 
     private final Paint paint = new Paint();
@@ -23,7 +23,7 @@ public class Joystick extends View {
     private float innerCircleX;
     private float innerCircleY;
     private float innerCircleR;
-    private JoystickListener joystickListener;
+    public JoystickListener joystickListener;
 
     public Joystick(Context context) {
         super(context);
@@ -84,7 +84,11 @@ public class Joystick extends View {
         if (distFromOuterCircleCenter(userX, userY) <= this.outerCircleR ) {
             this.innerCircleX = userX;
             this.innerCircleY = userY;
-            joystickListener.onChange(userX, userY);
+            try {
+                joystickListener.onChange(userX, userY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         invalidate();
@@ -104,7 +108,11 @@ public class Joystick extends View {
         // Resetting starting point
         this.innerCircleX = this.outerCircleX;
         this.innerCircleY = this.outerCircleY;
-        joystickListener.onChange(this.innerCircleX, this.innerCircleY);
+        try {
+            joystickListener.onChange(this.innerCircleX, this.innerCircleY);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         invalidate();
     }
 

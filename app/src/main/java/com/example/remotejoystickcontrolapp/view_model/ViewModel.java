@@ -8,19 +8,17 @@ import java.net.Socket;
 public class ViewModel {
 
     private FGPlayer fgPlayer;
-    public String ip;
-    public int port;
 
     public ViewModel(FGPlayer fgPlayer) {
         this.fgPlayer = fgPlayer;
     }
 
     // Establishing connection and running a thread for the "tasks"
-    public void connect() throws Exception {
+    public void connect(String ip, int port) throws Exception {
         try {
             this.fgPlayer.connect(ip, port);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
