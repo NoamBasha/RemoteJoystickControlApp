@@ -17,7 +17,11 @@ public class ViewModel {
 
     // Establishing connection and running a thread for the "tasks"
     public void connect() throws Exception {
-        this.fgPlayer.connect(ip,port);
+        try {
+            this.fgPlayer.connect(ip, port);
+        } catch (Exception e) {
+
+        }
     }
 
     // Disconnecting and setting isConnected to false

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.remotejoystickcontrolapp.view_model.ViewModel" />
+            type="com.example.remotejoystickcontrolapp.view_model.ViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,18 +15,105 @@
         android:layout_height="match_parent"
         tools:context=".views.MainActivity">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.ip}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.remotejoystickcontrolapp.views.Joystick
+        <!-- Outer Layout -->
+        <LinearLayout
+            android:id="@+id/outer_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Form Layout -->
+            <LinearLayout
+                android:id="@+id/form_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- IP -->
+                <EditText
+                    android:id="@+id/ip_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Enter IP here"
+                    android:inputType="text"
+                    android:text=""/>
+
+                <!-- Port -->
+                <EditText
+                    android:id="@+id/port_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Enter Port here"
+                    android:inputType="text"
+                    android:text=""/>
+
+                <!-- Connection Button -->
+                <Button
+                    android:id="@+id/connect_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Connect" />
+                    <!-- android:onClick="@{() -> viewModel.connect()}" -->
+            </LinearLayout>
+
+            <!-- Joystick and Sliders Layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"
+                android:weightSum="10">
+
+                <!-- Joystick and Throttle -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+
+                    <SeekBar
+                        android:id="@+id/throttle"
+                        android:layout_width="360dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-164dp"
+                        android:layout_marginTop="200dp"
+                        android:layout_marginBottom="335dp"
+                        android:rotation="270" />
+
+                    <!-- Joystick -->
+                    <com.example.remotejoystickcontrolapp.views.Joystick
+                        android:layout_width="400dp"
+                        android:layout_height="400dp"
+                        tools:ignore="MissingConstraints" />
+
+
+                </RelativeLayout>
+
+                <!-- Rudder Layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="8">
+
+                    <!-- Rudder -->
+                    <SeekBar
+                        android:id="@+id/rudder"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
