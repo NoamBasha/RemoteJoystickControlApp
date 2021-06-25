@@ -1,8 +1,10 @@
-package com.example.remotejoystickcontrolapp;
+package com.example.remotejoystickcontrolapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.remotejoystickcontrolapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
