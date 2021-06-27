@@ -20,10 +20,7 @@ public class Joystick extends View {
     private final Paint paint = new Paint();
     private double outerCircleX;
     private double outerCircleY;
-    private double outerCircleR;
-    private double innerCircleX;
-    private double innerCircleY;
-    private double innerCircleR;
+    public double outerCircleR;
     private double userX = 0;
     private double userY = 0;
     public JoystickListener joystickListener;
@@ -50,8 +47,10 @@ public class Joystick extends View {
         paint.setAntiAlias(true);
 
         // Outer and Inner circle height and width
-        this.outerCircleX = this.innerCircleX = (float)getWidth() / 2;
-        this.outerCircleY = this.innerCircleY = (float)getHeight() / 2;
+        double innerCircleX;
+        this.outerCircleX = innerCircleX = (float)getWidth() / 2;
+        double innerCircleY;
+        this.outerCircleY = innerCircleY = (float)getHeight() / 2;
 
         // Outer Circle
         paint.setColor(Color.BLACK);
@@ -60,8 +59,9 @@ public class Joystick extends View {
 
         // Inner Circle
         paint.setColor(Color.GRAY);
-        this.innerCircleR = (float)getWidth() / 8;
-        canvas.drawCircle((float)(this.innerCircleX  + userX), (float)(this.innerCircleY  + userY), (float)this.innerCircleR, paint);
+        double innerCircleR = (float) getWidth() / 8;
+        // Drawing while moving the inner circle
+        canvas.drawCircle((float)(innerCircleX + userX), (float)(innerCircleY + userY), (float) innerCircleR, paint);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -74,7 +74,7 @@ public class Joystick extends View {
                 this.touchMove(motionEvent);
                 return true;
             case MotionEvent.ACTION_UP:
-                this.upMove(motionEvent);
+                this.upMove();
                 return true;
         }
         return super.onTouchEvent(motionEvent);
@@ -106,8 +106,8 @@ public class Joystick extends View {
     }
 
     // When the user stops touching the joystick
-    private void upMove(MotionEvent motionEvent) {
-        // Resetting starting point
+    private void upMove() {
+        // Resetting joystick to starting point
         this.userX = 0;
         this.userY = 0;
         try {

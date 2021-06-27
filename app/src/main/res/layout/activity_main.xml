@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.example.remotejoystickcontrolapp.view_model.ViewModel"/>
+            type="com.example.remotejoystickcontrolapp.view_model.ViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".views.MainActivity">
-
 
         <!-- Outer Layout -->
         <LinearLayout
@@ -35,9 +33,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="Enter IP here"
+                    android:hint="@string/enter_ip_here"
+                    android:importantForAutofill="no"
                     android:inputType="text"
-                    android:text=""/>
+                    android:text="" />
 
                 <!-- Port -->
                 <EditText
@@ -45,9 +44,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="Enter Port here"
+                    android:hint="@string/enter_port_here"
+                    android:importantForAutofill="no"
                     android:inputType="text"
-                    android:text=""/>
+                    android:text="" />
 
                 <!-- Connection Button -->
                 <Button
@@ -55,8 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:text="Connect" />
-                <!-- android:onClick="@{() -> viewModel.connect()}" -->
+                    android:text="@string/connect" />
+
             </LinearLayout>
 
             <!-- Joystick and Sliders Layout -->
@@ -74,8 +74,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
 
                     <!-- Joystick -->
                     <com.example.remotejoystickcontrolapp.views.Joystick
@@ -100,21 +100,20 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="8">
+                    android:layout_weight="8"
+                    android:orientation="vertical">
 
                     <!-- Rudder -->
                     <SeekBar
                         android:id="@+id/rudder"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp" />
+                        android:layout_height="30dp"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

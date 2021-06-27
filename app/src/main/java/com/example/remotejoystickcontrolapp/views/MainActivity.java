@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -24,17 +23,17 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        // Fields
         FGPlayer fgPlayer = new FGPlayer();
         this.viewModel = new ViewModel(fgPlayer);
         activityMainBinding.setViewModel(viewModel);
 
         Joystick joystick = findViewById(R.id.joystick);
         joystick.joystickListener = (a, e) -> {
-            viewModel.sendAileron(a / 248.0);
-            viewModel.sendElevator(e  / 248.0);
+            viewModel.setAileron(a / joystick.outerCircleR);
+            viewModel.setElevator(e  / joystick.outerCircleR);
         };
 
+        // Button cb = activityMainBinding.connectButton;
         Button connectButton = findViewById(R.id.connect_button);
         EditText ipText = findViewById(R.id.ip_text);
         EditText portText = findViewById(R.id.port_text);
@@ -43,20 +42,20 @@ public class MainActivity extends AppCompatActivity {
 
         connectButton.setOnClickListener(v -> {
             String ip = ipText.getText().toString();
-            int port = Integer.parseInt(portText.getText().toString());
-            new Thread(() -> {
-                viewModel.connect(ip, port);
-            }).start();
+            String port = portText.getText().toString();
+            int port_num;
+            try {
+                port_num = Integer.parseInt(port);
+                new Thread(() -> viewModel.connect(ip, port_num)).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         throttleSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                try {
-                    viewModel.sendThrottle(progress / 100.0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                viewModel.setThrottle(progress / 100.0);
             }
 
             @Override
@@ -71,11 +70,7 @@ public class MainActivity extends AppCompatActivity {
         rudderSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                try {
-                    viewModel.sendRudder((progress - 50) / 50.0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                viewModel.setRudder((progress - 50) / 50.0);
             }
 
             @Override
