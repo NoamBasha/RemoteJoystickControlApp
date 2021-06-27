@@ -6,8 +6,8 @@ The user opens the application and sees the connection layout and the control la
 The user insert the desired IP and PORT and connect to the flight simulator.   
 The user can control the plane via the joystick and seekbars.  
 
-## Preperation:
-### Server Side:
+## Preperation
+### Server Side
 1. Download the 'FlightGear' application.  
 2. Open the 'FlightGear' application and go to settings -> additional settings and write the following line:  
 --telnet=socket,in,10,127.0.0.1,6400,tcp  
@@ -15,14 +15,14 @@ The user can control the plane via the joystick and seekbars.
 3. Press the 'fly!' button then press on Toolbar -> 'Cessna C172P' -> 'Autostart'.  
 4. You may change the view by pressing 'v' on your keyboard.  
 
-### Client Side:
+### Client Side
 1. Open Android Studio.
 2. Clone the project.
 3. Run the application.
 4. Enter your IP address and the PORT youv'e entered on the server side.
 5. Fly the plane :)
 	
-## Architecture:
+## Architecture
 The architecture of the project is based on the MVVM architecture:
 * Model:  
 FGPlayer – Connects to the server and sends the values it receives
