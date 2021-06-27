@@ -47,7 +47,7 @@ To fly the plane the user must control 4 components:
 
 ## Video
 
-__VIDEO__
+Press [here](/AndroidJoystickRemoteControlApp.mp4) to watch our demo video.
 
 ## Developers
 * Noam Basha
