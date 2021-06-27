@@ -13,9 +13,7 @@ public class FGPlayer {
     // Establishing connection and running a thread for the tasks
     public void connect(String ip, int port) {
         try {
-            System.out.println("Connecting...");
             Socket fg = new Socket(ip, port);
-            System.out.println("Connected");
             this.out = new PrintWriter(fg.getOutputStream(), true);
         } catch (Exception e) {
             e.printStackTrace();

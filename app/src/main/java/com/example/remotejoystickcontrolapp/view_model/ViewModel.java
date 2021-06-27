@@ -10,6 +10,7 @@ public class ViewModel {
         this.fgPlayer = fgPlayer;
     }
 
+    // Connect
     public void connect(String ip, int port) {
         try {
             this.fgPlayer.connect(ip, port);
