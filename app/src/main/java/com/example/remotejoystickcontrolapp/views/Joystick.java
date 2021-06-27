@@ -1,5 +1,6 @@
 package com.example.remotejoystickcontrolapp.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,11 +11,11 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class Joystick extends View {
+interface JoystickListener {
+    void onChange(double x, double y) throws InterruptedException;
+}
 
-    interface JoystickListener {
-        void onChange(float x, float y) throws InterruptedException;
-    }
+public class Joystick extends View {
 
     private final Paint paint = new Paint();
     private float outerCircleX;
@@ -61,9 +62,13 @@ public class Joystick extends View {
         canvas.drawCircle(this.innerCircleX, this.innerCircleY, this.innerCircleR, paint);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+                return true;
             case MotionEvent.ACTION_MOVE:
                 this.touchMove(motionEvent);
                 return true;
@@ -115,5 +120,4 @@ public class Joystick extends View {
         }
         invalidate();
     }
-
 }

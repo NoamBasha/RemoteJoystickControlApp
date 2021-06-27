@@ -56,7 +56,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:text="Connect" />
-                    <!-- android:onClick="@{() -> viewModel.connect()}" -->
+                <!-- android:onClick="@{() -> viewModel.connect()}" -->
             </LinearLayout>
 
             <!-- Joystick and Sliders Layout -->
@@ -77,6 +77,14 @@
                     android:orientation="horizontal"
                     android:layout_weight="2">
 
+                    <!-- Joystick -->
+                    <com.example.remotejoystickcontrolapp.views.Joystick
+                        android:id="@+id/joystick"
+                        android:layout_width="400dp"
+                        android:layout_height="400dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <!-- Throttle -->
                     <SeekBar
                         android:id="@+id/throttle"
                         android:layout_width="360dp"
@@ -85,14 +93,6 @@
                         android:layout_marginTop="200dp"
                         android:layout_marginBottom="335dp"
                         android:rotation="270" />
-
-                    <!-- Joystick -->
-                    <com.example.remotejoystickcontrolapp.views.Joystick
-                        android:id="@+id/joystick"
-                        android:layout_width="400dp"
-                        android:layout_height="400dp"
-                        tools:ignore="MissingConstraints" />
-
 
                 </RelativeLayout>
 

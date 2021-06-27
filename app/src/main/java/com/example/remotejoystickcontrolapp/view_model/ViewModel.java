@@ -14,7 +14,7 @@ public class ViewModel {
     }
 
     // Establishing connection and running a thread for the "tasks"
-    public void connect(String ip, int port) throws Exception {
+    public void connect(String ip, int port) {
         try {
             this.fgPlayer.connect(ip, port);
         } catch (Exception e) {
@@ -28,23 +28,22 @@ public class ViewModel {
     }
 
     // Aileron task
-    public void sendAileron(float v) throws InterruptedException {
-        //TODO Should normalize v?
+    public void sendAileron(double v) throws InterruptedException {
         this.fgPlayer.sendAileron(v);
     }
 
     // Elevator task
-    public void sendElevator(float v) throws InterruptedException {
+    public void sendElevator(double v) throws InterruptedException {
         this.fgPlayer.sendElevator(v);
     }
 
     // Rudder task
-    public void sendRudder(float v) throws InterruptedException {
+    public void sendRudder(double v) throws InterruptedException {
         this.fgPlayer.sendRudder(v);
     }
 
     // Throttle task
-    public void sendThrottle(float v) throws InterruptedException {
+    public void sendThrottle(double v) throws InterruptedException {
         this.fgPlayer.sendThrottle(v);
     }
 }

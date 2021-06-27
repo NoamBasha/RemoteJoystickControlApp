@@ -16,15 +16,7 @@ import com.example.remotejoystickcontrolapp.view_model.ViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    // Fields
-    private FGPlayer fgPlayer;
     private ViewModel viewModel;
-    private SeekBar throttleSeekbar;
-    private SeekBar rudderSeekbar;
-    private Joystick joystick;
-    private String ip;
-    private int port;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,45 +25,75 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        this.fgPlayer = new FGPlayer();
+        // Fields
+        FGPlayer fgPlayer = new FGPlayer();
         this.viewModel = new ViewModel(fgPlayer);
         activityMainBinding.setViewModel(viewModel);
 
-
-
-        this.joystick = findViewById(R.id.joystick);
-        joystick.joystickListener = (a, e)-> {
-            this.viewModel.sendAileron(a);
-            this.viewModel.sendElevator(e);
+        Joystick joystick = findViewById(R.id.joystick);
+        joystick.joystickListener = (e, a) -> {
+                viewModel.sendAileron(a);
+                viewModel.sendElevator(e);
         };
         connectButtonListener();
         throttleSeekbarListener();
         rudderSeekbarListener();
     }
 
-    private void rudderSeekbarListener() {
-        //TODO
-    }
-
-    private void throttleSeekbarListener() {
-        //TODO
-    }
-
     private void connectButtonListener() {
         Button connectButton = findViewById(R.id.connect_button);
         EditText ipText = findViewById(R.id.ip_text);
         EditText portText = findViewById(R.id.port_text);
-        connectButton.setOnClickListener(new View.OnClickListener() {
+        connectButton.setOnClickListener(v -> {
+            String ip = ipText.getText().toString();
+            int port = Integer.parseInt(portText.getText().toString());
+            new Thread(() -> {
+                viewModel.connect(ip, port);
+            }).start();
+        });
+    }
+
+    private void throttleSeekbarListener() {
+        SeekBar throttleSeekbar = findViewById(R.id.throttle);
+        throttleSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                String ip = ipText.getText().toString();
-                int port = Integer.parseInt(portText.getText().toString());
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 try {
-                    viewModel.connect(ip, port);
-                } catch (Exception e) {
+                    double nProgress = progress / 100.0;
+                    System.out.println(nProgress);
+                    viewModel.sendThrottle(nProgress);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+    }
+
+    private void rudderSeekbarListener() {
+        SeekBar rudderSeekbar = findViewById(R.id.rudder);
+        rudderSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                try {
+                    double nProgress = (progress - 50) / 50.0;
+                    System.out.println(nProgress);
+                    viewModel.sendRudder(nProgress);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
     }
 }
