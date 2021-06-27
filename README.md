@@ -3,7 +3,7 @@
 ## Introduction
 This project is an Android application for remote control, which was developed in Java using Android Studio.  
 The user opens the application and sees the connection layout and the control layout.  
-The user insert the desired ip and port and connect to the flight simulator.   
+The user insert the desired IP and PORT and connect to the flight simulator.   
 The user can control the plane via the joystick and seekbars.  
 
 ## Preperation:
@@ -11,26 +11,26 @@ The user can control the plane via the joystick and seekbars.
 1. Download the 'FlightGear' application _here_  
 2. Open flight gear and go to settings and under the additnal settings write the following line:  
 --telnet=socket,in,10,127.0.0.1,6400,tcp  
-(The number 6400 represnsts the port number. You may choose another port number).   
+(The number 6400 represents the PORT number. You may choose another PORT number).   
 3. Press the 'fly!' button, press on the 'Cessna C172P' on the tool bar and press on 'Autostart'  
 4. You may change the view by pressing 'v' on your keyboard.  
 
 ### Client Side:
-1. Open android studio
+1. Open Android Studio
 2. Clone the project
 3. Run the application.
-4. Enter your IP address and the port youv'e entered on the server side.
+4. Enter your IP address and the PORT youv'e entered on the server side.
 5. Fly the plane :)
 	
 ## Architecture:
-The architecture of the prjiect is based onm the MVVM archetoure:
+The architecture of the project is based on the MVVM architecture:
 * Model:  
-FGModel – Connects to the server and sends the values he receives
+FGModel – Connects to the server and sends the values it receives
 * View Model:  
-ViewModel – Connects between the Model and the view.
+ViewModel – Connects between the Model and the View.
 * View:  
-MainActivity – Binded to the application view, sends instructions to the view model accorind to the user.   
-Joystick – Standalone class for a joystick (the be transferred to other prjoects).
+MainActivity – Binded to the application's view. Sends instructions to the view model according to the user.   
+Joystick – Standalone class for a joystick (that can be transferred to other prjoects).
 
 ## Functionality
 To fly the plane the user must control 4 components:
