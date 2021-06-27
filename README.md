@@ -39,11 +39,11 @@ To fly the plane the user must control 4 components:
 * Elevator - controls the oitch of the plane.
 * Aileron - controls the roll of the plane.
 
-__Insert PHOTO__
++
 
 ## UML
 
-![](/tree/master/app/src/main/java/com/example/remotejoystickcontrolapp)
+![](/app/src/main/java/com/example/remotejoystickcontrolapp/RemoteJoystickControlAppUML.jpeg)
 
 ## Video
 
