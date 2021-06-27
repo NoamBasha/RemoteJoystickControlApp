@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class FGPlayer {
 
     private PrintWriter out;
-    BlockingDeque<Runnable> dispatchQueue = new LinkedBlockingDeque<>();
+    private BlockingDeque<Runnable> dispatchQueue = new LinkedBlockingDeque<>();
 
     // Establishing connection and running a thread for the tasks
     public void connect(String ip, int port) {
