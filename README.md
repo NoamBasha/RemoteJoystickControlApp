@@ -34,10 +34,10 @@ Joystick – Standalone class for a joystick (that can be transferred to other p
 
 ## Functionality
 To fly the plane the user must control 4 components:
-* Throttle - the amount of fuel that is provided to the engine.
-* Rudder - the fin of the plane.
-* Elevator - controls the pitch of the plane.
-* Aileron - controls the roll of the plane.
+* Throttle - the amount of fuel that is provided to the engine by the pilot.
+* Rudder - controls rotation about the vertical axis.
+* Elevator - controls movement about the lateral axis
+* Aileron - controls movement about the longitudinal axis.
 
 ![](/app/src/main/java/com/example/remotejoystickcontrolapp/RemoteJoystickControlAppPhoto.jpeg)
 
