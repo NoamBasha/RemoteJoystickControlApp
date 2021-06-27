@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 
 import com.example.remotejoystickcontrolapp.R;
@@ -27,22 +25,14 @@ public class MainActivity extends AppCompatActivity {
         this.viewModel = new ViewModel(fgPlayer);
         activityMainBinding.setViewModel(viewModel);
 
-        Joystick joystick = findViewById(R.id.joystick);
-        joystick.joystickListener = (a, e) -> {
-            viewModel.setAileron(a / joystick.outerCircleR);
-            viewModel.setElevator(e  / joystick.outerCircleR);
+        activityMainBinding.joystick.joystickListener = (a, e) -> {
+            viewModel.setAileron(a / activityMainBinding.joystick.outerCircleR);
+            viewModel.setElevator(e  / activityMainBinding.joystick.outerCircleR);
         };
 
-        // Button cb = activityMainBinding.connectButton;
-        Button connectButton = findViewById(R.id.connect_button);
-        EditText ipText = findViewById(R.id.ip_text);
-        EditText portText = findViewById(R.id.port_text);
-        SeekBar throttleSeekbar = findViewById(R.id.throttle);
-        SeekBar rudderSeekbar = findViewById(R.id.rudder);
-
-        connectButton.setOnClickListener(v -> {
-            String ip = ipText.getText().toString();
-            String port = portText.getText().toString();
+        activityMainBinding.connectButton.setOnClickListener(v -> {
+            String ip = activityMainBinding.ipText.getText().toString();
+            String port = activityMainBinding.portText.getText().toString();
             int port_num;
             try {
                 port_num = Integer.parseInt(port);
@@ -52,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        throttleSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        activityMainBinding.throttle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 viewModel.setThrottle(progress / 100.0);
@@ -67,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        rudderSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        activityMainBinding.rudder.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 viewModel.setRudder((progress - 50) / 50.0);
