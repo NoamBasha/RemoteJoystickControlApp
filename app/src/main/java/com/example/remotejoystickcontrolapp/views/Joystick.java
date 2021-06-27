@@ -11,19 +11,21 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-interface JoystickListener {
-    void onChange(double x, double y) throws InterruptedException;
-}
-
 public class Joystick extends View {
 
+    interface JoystickListener {
+        void onChange(double x, double y) throws InterruptedException;
+    }
+
     private final Paint paint = new Paint();
-    private float outerCircleX;
-    private float outerCircleY;
-    private float outerCircleR;
-    private float innerCircleX;
-    private float innerCircleY;
-    private float innerCircleR;
+    private double outerCircleX;
+    private double outerCircleY;
+    private double outerCircleR;
+    private double innerCircleX;
+    private double innerCircleY;
+    private double innerCircleR;
+    private double userX = 0;
+    private double userY = 0;
     public JoystickListener joystickListener;
 
     public Joystick(Context context) {
@@ -54,12 +56,12 @@ public class Joystick extends View {
         // Outer Circle
         paint.setColor(Color.BLACK);
         this.outerCircleR = (float)getWidth() / 4;
-        canvas.drawCircle(this.outerCircleX, this.outerCircleY, this.outerCircleR, paint);
+        canvas.drawCircle((float)this.outerCircleX, (float)this.outerCircleY, (float)this.outerCircleR, paint);
 
         // Inner Circle
         paint.setColor(Color.GRAY);
         this.innerCircleR = (float)getWidth() / 8;
-        canvas.drawCircle(this.innerCircleX, this.innerCircleY, this.innerCircleR, paint);
+        canvas.drawCircle((float)(this.innerCircleX  + userX), (float)(this.innerCircleY  + userY), (float)this.innerCircleR, paint);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -67,7 +69,6 @@ public class Joystick extends View {
     public boolean onTouchEvent(MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
                 return true;
             case MotionEvent.ACTION_MOVE:
                 this.touchMove(motionEvent);
@@ -81,16 +82,12 @@ public class Joystick extends View {
 
     // When the joystick is touched
     private void touchMove(MotionEvent motionEvent) {
-
-        float userX = motionEvent.getX();
-        float userY = motionEvent.getY();
-
         // If the joystick went too far, do not move the joystick
-        if (distFromOuterCircleCenter(userX, userY) <= this.outerCircleR ) {
-            this.innerCircleX = userX;
-            this.innerCircleY = userY;
+        if (distFromOuterCircleCenter(motionEvent.getX(), motionEvent.getY()) <= this.outerCircleR ) {
+            this.userX = motionEvent.getX() - getWidth() / 2.0;
+            this.userY = motionEvent.getY() - getHeight()  / 2.0;
             try {
-                joystickListener.onChange(userX, userY);
+                joystickListener.onChange(this.userX, this.userY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -100,21 +97,21 @@ public class Joystick extends View {
     }
 
     // Measures distance from x, y to the center of the outer circle
-    private float distFromOuterCircleCenter(float x, float y) {
-        float xDiff = x - this.outerCircleX;
-        float xDiffSquaredDouble = xDiff * xDiff;
-        float yDiff = y - this.outerCircleY;
-        float yDiffSquaredDouble = yDiff * yDiff;
-        return (float)Math.sqrt(xDiffSquaredDouble + yDiffSquaredDouble);
+    private double distFromOuterCircleCenter(double x, double y) {
+        double xDiff = x - this.outerCircleX;
+        double xDiffSquaredDouble = xDiff * xDiff;
+        double yDiff = y - this.outerCircleY;
+        double yDiffSquaredDouble = yDiff * yDiff;
+        return Math.sqrt(xDiffSquaredDouble + yDiffSquaredDouble);
     }
 
     // When the user stops touching the joystick
     private void upMove(MotionEvent motionEvent) {
         // Resetting starting point
-        this.innerCircleX = this.outerCircleX;
-        this.innerCircleY = this.outerCircleY;
+        this.userX = 0;
+        this.userY = 0;
         try {
-            joystickListener.onChange(this.innerCircleX, this.innerCircleY);
+            joystickListener.onChange(this.userX, this.userY);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

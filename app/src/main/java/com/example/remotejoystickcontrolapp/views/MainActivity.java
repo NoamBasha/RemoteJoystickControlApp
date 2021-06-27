@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
 
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
@@ -31,19 +30,17 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.setViewModel(viewModel);
 
         Joystick joystick = findViewById(R.id.joystick);
-        joystick.joystickListener = (e, a) -> {
-                viewModel.sendAileron(a);
-                viewModel.sendElevator(e);
+        joystick.joystickListener = (a, e) -> {
+            viewModel.sendAileron(a / 248.0);
+            viewModel.sendElevator(e  / 248.0);
         };
-        connectButtonListener();
-        throttleSeekbarListener();
-        rudderSeekbarListener();
-    }
 
-    private void connectButtonListener() {
         Button connectButton = findViewById(R.id.connect_button);
         EditText ipText = findViewById(R.id.ip_text);
         EditText portText = findViewById(R.id.port_text);
+        SeekBar throttleSeekbar = findViewById(R.id.throttle);
+        SeekBar rudderSeekbar = findViewById(R.id.rudder);
+
         connectButton.setOnClickListener(v -> {
             String ip = ipText.getText().toString();
             int port = Integer.parseInt(portText.getText().toString());
@@ -51,49 +48,43 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.connect(ip, port);
             }).start();
         });
-    }
 
-    private void throttleSeekbarListener() {
-        SeekBar throttleSeekbar = findViewById(R.id.throttle);
         throttleSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 try {
-                    double nProgress = progress / 100.0;
-                    System.out.println(nProgress);
-                    viewModel.sendThrottle(nProgress);
+                    viewModel.sendThrottle(progress / 100.0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
-    }
 
-    private void rudderSeekbarListener() {
-        SeekBar rudderSeekbar = findViewById(R.id.rudder);
         rudderSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 try {
-                    double nProgress = (progress - 50) / 50.0;
-                    System.out.println(nProgress);
-                    viewModel.sendRudder(nProgress);
+                    viewModel.sendRudder((progress - 50) / 50.0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
     }
 }
